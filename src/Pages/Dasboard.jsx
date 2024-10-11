@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../components/Sidebar";
+import Header from "../components/Sidebar/Sidebar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar/Navbar";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
@@ -12,7 +12,7 @@ import GeoChart from "../Chart/GeoChart";
 // import PieChart from "../charts/PieChart";
 import PieChart from "../Chart/PieChart";
 // import BarChart from "../charts/BarChart";
-import BarChart from "../components/BarChart";
+import BarChart from "../Chart/BarChat/BarChart";
 import CountUp from "react-countup";
 
 export default function Dasboard() {

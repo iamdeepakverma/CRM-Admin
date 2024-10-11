@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import Header from '../components/Sidebar'
-import Navbar from '../components/Navbar'
+import Header from '../components/Sidebar/Sidebar'
+import Navbar from '../components/Navbar/Navbar'
 import List from '../Setting/List'
 
 const Setting = () => {

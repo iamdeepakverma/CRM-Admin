@@ -1,9 +1,8 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import Header from '../components/Sidebar'
-import Navbar from '../components/Navbar'
-import UserList from '../components/User/UserList'
-
+import Header from '../components/Sidebar/Sidebar'
+import Navbar from '../components/Navbar/Navbar'
+import{ UserList }from '../components/User/UserList'
 
 const User = () => {
   return (
@@ -15,9 +14,12 @@ const User = () => {
     <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
       <UserList/>
       </Box>
+     {/* <Adduser/> */}
      </Box>
     </>
   )
 }
 
-export default User
+export default User;
+
+

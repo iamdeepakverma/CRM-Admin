@@ -1,10 +1,10 @@
 import React from "react";
 import { Box } from "@mui/material";
-import Header from "./Sidebar";
-import Navbar from "./Navbar";
-import {Link } from "react-router-dom";
+import Header from "../Sidebar/Sidebar";
+import Navbar from "../Navbar/Navbar";
+import { Link } from "react-router-dom";
 
-function SignIn() {
+function SignUp() {
   return (
     <>
       <Navbar />
@@ -15,10 +15,14 @@ function SignIn() {
           <div className="container mt-5">
             <div className="row justify-content-center">
               <div className="col-md-6 input_width">
-                <img className="d-flex mx-auto w-25" src="assets/images/Unlock.png" alt="" />
-                <h2 className="text-center mb-4">Sign In</h2>
+                <img
+                  className="d-flex mx-auto w-25"
+                  src="assets/images/Lock.png"
+                  alt=""
+                />
+                <h2 className="text-center mb-4">Sign Up</h2>
                 <div className="text-center mb-4 fw-bolder">
-                  Welcome user, please sign in to continue
+                  Welcome user, please Sign Up to continue
                 </div>
                 <form className="input_text pt-4">
                   <div className="mb-3">
@@ -45,6 +49,18 @@ function SignIn() {
                       required=""
                     />
                   </div>
+                  <div className="mb-3">
+                    {/* <label htmlFor="confirm-password" className="form-label">
+                      Confirm Password
+                    </label> */}
+                    <input
+                      type="password"
+                      className="w form-control"
+                      id="confirm-password"
+                      placeholder="Confirm password"
+                      required=""
+                    />
+                  </div>
                   <div className="form-check mb-3">
                     <input
                       type="checkbox"
@@ -56,48 +72,60 @@ function SignIn() {
                     </label>
                   </div>
                   <div className="d-grid mb-3">
-                    <button
-                      type="submit"
-                      className="btn_class fw-bolder "
-                    >
-                      Sign In
+                    <button type="submit" className="btn_class fw-bolder ">
+                      Sign Up
                     </button>
                   </div>
 
                   <div className="text-center mb-3">
-                    <Link to="#" className="link-primary">
+                    <Link to="#" className="text-primary">
                       Forgot Password?
                     </Link>
                     <span> | </span>
-                    <Link to="/signup" className="link-primary">
-                      Sign Up
+                    <Link to="/signin" className="link-primary">
+                      Sign In
                     </Link>
                   </div>
                   <div className="d-grid mb-2">
                     <button
                       type="button"
-                      className="btn fw-bolder"
-                      style={{ backgroundColor: "#e0e0e0" }} 
+                      className="sadow_btn btn fw-bolder"
+                      style={{ backgroundColor: "#e0e0e0" }}
                     >
-                      <img className="svg_class_svg" src="assets/images/Google.svg" alt="" /> Sign in with Google
+                      <img
+                        className="svg_class_svg"
+                        src="assets/images/Google.svg"
+                        alt=""
+                      />{" "}
+                      Sign in with Google
                     </button>
                   </div>
                   <div className="d-grid mb-2">
                     <button
                       type="button"
-                      className="btn fw-bolder"
+                      className="sadow_btn btn fw-bolder"
                       style={{ backgroundColor: "#e0e0e0" }}
                     >
-                       <img className="svg_class_svg" src="assets/images/Facebook.svg" alt="" />  Sign in with Facebook
+                      <img
+                        className="svg_class_svg"
+                        src="assets/images/Facebook.svg"
+                        alt=""
+                      />{" "}
+                      Sign in with Facebook
                     </button>
                   </div>
                   <div className="d-grid mb-2">
                     <button
                       type="button"
-                      className="btn fw-bolder"
+                      className="sadow_btn btn fw-bolder"
                       style={{ backgroundColor: "#e0e0e0" }}
                     >
-                      <img className="svg_class_svg" src="assets/images/X.svg" alt="" /> Sign in with Twitter
+                      <img
+                        className="svg_class_svg"
+                        src="assets/images/X.svg"
+                        alt=""
+                      />{" "}
+                      Sign in with Twitter
                     </button>
                   </div>
                 </form>
@@ -110,4 +138,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;
