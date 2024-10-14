@@ -105,7 +105,7 @@ export default function Header() {
        
         <Divider />
         <List>
-        <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/home")}}>
+        <ListItem  disablePadding sx={{ display: 'block' }} onClick={()=>{navigate("/")}}>
               <ListItemButton
                 sx={[
                   {

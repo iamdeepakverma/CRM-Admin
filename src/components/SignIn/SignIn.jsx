@@ -1,43 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import Header from "../Sidebar/Sidebar";
 import Navbar from "../Navbar/Navbar";
 import {Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function SignIn() {
 
   const [email , setEmail ] = useState();
   const [ password , setPassword ] = useState();
+  const [ cookies, setCookie ] = useCookies()
+
 
   const navigate = useNavigate();
 
   const handleSubmit=()=>{
     const userDetails={"email":email, "password":password,};
     axios.post("http://localhost:3001/api/v1/auth/login",userDetails).then((res)=>{
-      console.log(res.data.token)
-      console.log(res.data)
-      console.log(res)
-      // alert("Sign Up Sucessfully")
-
-      if(res.data.token!="error")
-        {
-          var obj=res.data;
-          
-          localStorage.setItem("token",res.data.token);
-          localStorage.setItem("userdetails",obj.userdetails);
-           (obj.userdetails=="admin")?navigate("/home"):navigate("/home");
-          // setOutput("Login Succsess");
-          // alert("Login Succsessfully")
-        } 
-        // console.log(response.data)
-
+      const obj = res.data
+      if(obj.token!=="error"){
+      setCookie("token", obj.token, {
+        path: '/',                // Cookie is accessible across the entire site
+        maxAge: 3600,             // Cookie expires in 1 hour
+        secure: true,             // Cookie will only be set over HTTPS
+        sameSite: 'Lax',          // Cookie is not sent with cross-site requests
+      });
+      setCookie("userdetails",(obj.userdetails), {
+        path: '/',
+        maxAge: 3600,
+      });
+      checkRoleandNavigate(obj.token, obj.userdetails);
+    } else {
+      alert("Login failed");
+    }
+        console.log("cookis is working",cookies)
     }).catch((err)=>{
       console.log(err)
       alert("somethin error")
     })
+  };
+  const checkRoleandNavigate=(token, userdetails)=>{
+    if(token && userdetails === "admin"){
+      navigate("/")
+    }else if(token && userdetails === "user"){
+      navigate("/")
+    }
+    else{
+      alert("Invalid User")
+    }
   }
+
+  useEffect(() => {
+    const token = cookies.token;
+    const userdetails = cookies.userdetails ? (cookies.userdetails) : null;
+
+    if (token && userdetails) {
+      checkRoleandNavigate(token, userdetails); // Check role and navigate
+    }
+  }, [cookies, navigate]); // Re-run whenever cookies change
+
+
 
   return (
     <>

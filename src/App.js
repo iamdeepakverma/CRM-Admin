@@ -22,10 +22,10 @@ function App() {
     <>
     <BrowserRouter>
     <Routes>
-      <Route path={'/home'} element={<Home/>}></Route>
+      <Route path={'/'} element={<Home/>}></Route>
       <Route path={'/about'} element={<About/>}></Route>
       <Route path={'/Setting'} element={<Setting/>}></Route>
-      <Route path={'/'} element={<SignIn/>}></Route>
+      <Route path={'/signin'} element={<SignIn/>}></Route>
       <Route path={'/signup'} element={<SignUp/>}></Route>
       <Route path={'/account'} element={<Account/>}></Route>
       <Route path={'/user'} element={<User/>}></Route>

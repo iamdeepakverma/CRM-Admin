@@ -18,10 +18,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { useAppStore } from "../../appStore";
+import { useCookies } from 'react-cookie';
+
 
 // icons
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdOutlineAccountCircle } from "react-icons/md";
+import Auth from "../Auth/Auth";
 
 
 
@@ -81,6 +84,8 @@ export default function Navbar() {
   const dopen = useAppStore((state) => state.dopen);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [cookies] = useCookies(['token', 'userdetails']);
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -97,6 +102,21 @@ export default function Navbar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const renderNavbar = () => {
+    const token = cookies.token;
+    const userdetails = cookies.userdetails;
+  
+    // console.log(token, userdetails); // Debugging output
+  
+    if (token && userdetails === "admin") {
+      return <AdminNavbar />;
+    } else if (token && userdetails === "user") {
+      return <UserNavbar />;
+    } else {
+      return <DefaultNavbar />;
+    }
   };
 
   const menuId = "primary-search-account-menu";
@@ -179,11 +199,9 @@ export default function Navbar() {
     </Menu>
   );
 
-  React.useEffect(()=>{
-    if(localStorage.getItem("token") !=undefined && localStorage.getItem("userdetails")==("admin")){
-      setNabarlocal(
-        <>
-         <Box sx={{ flexGrow: 1 }}>
+  const AdminNavbar=()=>{
+    return(
+  <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
         <Toolbar>
           <IconButton
@@ -262,185 +280,184 @@ export default function Navbar() {
       {renderMobileMenu}
       {renderMenu}
     </Box>
-        </>
-      )
-    }
-    else if(localStorage.getItem("token") !=undefined && localStorage.getItem("userdetails")==("user")){
-      setNabarlocal(
-        <>
-         <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={() => updateOpen(!dopen)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-             User Dasboard
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
-        </>
-      )
-    }
-    else (
-      setNabarlocal(
-        <>
-         <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-            onClick={() => updateOpen(!dopen)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-             Dasboard
-          </Typography>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </Box>
-        </>
-      )
+
+    
     )
-    })
+   }
+ 
+   const UserNavbar=()=>{
+     return(
+       <Box sx={{ flexGrow: 1 }}>
+     <AppBar position="fixed">
+       <Toolbar>
+         <IconButton
+           size="large"
+           edge="start"
+           color="inherit"
+           aria-label="open drawer"
+           sx={{ mr: 2 }}
+           onClick={() => updateOpen(!dopen)}
+         >
+           <MenuIcon />
+         </IconButton>
+         <Typography
+           variant="h6"
+           noWrap
+           component="div"
+           sx={{ display: { xs: "none", sm: "block" } }}
+         >
+            User Dasboard
+         </Typography>
+         <Search>
+           <SearchIconWrapper>
+             <SearchIcon />
+           </SearchIconWrapper>
+           <StyledInputBase
+             placeholder="Search…"
+             inputProps={{ "aria-label": "search" }}
+           />
+         </Search>
+         <Box sx={{ flexGrow: 1 }} />
+         <Box sx={{ display: { xs: "none", md: "flex" } }}>
+           <IconButton
+             size="large"
+             aria-label="show 4 new mails"
+             color="inherit"
+           >
+             <Badge badgeContent={4} color="error">
+               <MailIcon />
+             </Badge>
+           </IconButton>
+           <IconButton
+             size="large"
+             aria-label="show 17 new notifications"
+             color="inherit"
+           >
+             <Badge badgeContent={17} color="error">
+               <NotificationsIcon />
+             </Badge>
+           </IconButton>
+           <IconButton
+             size="large"
+             edge="end"
+             aria-label="account of current user"
+             aria-controls={menuId}
+             aria-haspopup="true"
+             onClick={handleProfileMenuOpen}
+             color="inherit"
+           >
+             <AccountCircle />
+           </IconButton>
+         </Box>
+         <Box sx={{ display: { xs: "flex", md: "none" } }}>
+           <IconButton
+             size="large"
+             aria-label="show more"
+             aria-controls={mobileMenuId}
+             aria-haspopup="true"
+             onClick={handleMobileMenuOpen}
+             color="inherit"
+           >
+             <MoreIcon />
+           </IconButton>
+         </Box>
+       </Toolbar>
+     </AppBar>
+     {renderMobileMenu}
+     {renderMenu}
+   </Box>
+     )
+   }
+ 
+   const DefaultNavbar=()=>{
+    return(
+     <Box sx={{ flexGrow: 1 }}>
+     <AppBar position="fixed">
+       <Toolbar>
+         <IconButton
+           size="large"
+           edge="start"
+           color="inherit"
+           aria-label="open drawer"
+           sx={{ mr: 2 }}
+           onClick={() => updateOpen(!dopen)}
+         >
+           <MenuIcon />
+         </IconButton>
+         <Typography
+           variant="h6"
+           noWrap
+           component="div"
+           sx={{ display: { xs: "none", sm: "block" } }}
+         >
+            Dasboard
+         </Typography>
+         <Search>
+           <SearchIconWrapper>
+             <SearchIcon />
+           </SearchIconWrapper>
+           <StyledInputBase
+             placeholder="Search…"
+             inputProps={{ "aria-label": "search" }}
+           />
+         </Search>
+         <Box sx={{ flexGrow: 1 }} />
+         <Box sx={{ display: { xs: "none", md: "flex" } }}>
+           <IconButton
+             size="large"
+             aria-label="show 4 new mails"
+             color="inherit"
+           >
+             <Badge badgeContent={4} color="error">
+               <MailIcon />
+             </Badge>
+           </IconButton>
+           <IconButton
+             size="large"
+             aria-label="show 17 new notifications"
+             color="inherit"
+           >
+             <Badge badgeContent={17} color="error">
+               <NotificationsIcon />
+             </Badge>
+           </IconButton>
+           <IconButton
+             size="large"
+             edge="end"
+             aria-label="account of current user"
+             aria-controls={menuId}
+             aria-haspopup="true"
+             onClick={handleProfileMenuOpen}
+             color="inherit"
+           >
+             <AccountCircle />
+           </IconButton>
+         </Box>
+         <Box sx={{ display: { xs: "flex", md: "none" } }}>
+           <IconButton
+             size="large"
+             aria-label="show more"
+             aria-controls={mobileMenuId}
+             aria-haspopup="true"
+             onClick={handleMobileMenuOpen}
+             color="inherit"
+           >
+             <MoreIcon />
+           </IconButton>
+         </Box>
+       </Toolbar>
+     </AppBar>
+     {renderMobileMenu}
+     {renderMenu}
+   </Box>
+    )
+   }
 
 
   return (
    <>
-   {Navbarlocal}
+   <Auth/>
+   {renderNavbar()}
    </>
   );
 }
